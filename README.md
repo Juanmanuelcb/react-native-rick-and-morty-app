@@ -47,14 +47,14 @@ src/
 
 ## Scripts
 
-| Command | What it does |
-|---------|-------------|
-| `yarn start` | Start Expo dev server |
-| `yarn ios` | Run on iOS simulator |
-| `yarn android` | Run on Android emulator |
-| `yarn lint` | Check code with ESLint |
-| `yarn lint:fix` | Fix lint errors |
-| `yarn format` | Format code with Prettier |
+| Command         | What it does              |
+| --------------- | ------------------------- |
+| `yarn start`    | Start Expo dev server     |
+| `yarn ios`      | Run on iOS simulator      |
+| `yarn android`  | Run on Android emulator   |
+| `yarn lint`     | Check code with ESLint    |
+| `yarn lint:fix` | Fix lint errors           |
+| `yarn format`   | Format code with Prettier |
 
 ## Trade-offs decisions
 
