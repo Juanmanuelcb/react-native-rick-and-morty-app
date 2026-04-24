@@ -1,8 +1,8 @@
 import * as React from 'react';
 import { FlatList, ListRenderItem, StyleSheet } from 'react-native';
 import { Character, CharacterStatus } from '../../api/models';
+import { CharacterCard } from '../../components/CharacterCard';
 import { Container } from '../../components/Container';
-import { CharacterCard } from './components/CharacterCard';
 import { Search } from './components/Search';
 
 export interface HomeComponentsProps {

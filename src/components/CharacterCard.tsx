@@ -1,8 +1,8 @@
 import { Avatar, ListItem, Text } from '@rneui/themed';
 import * as React from 'react';
 import { StyleSheet } from 'react-native';
-import { CharacterStatus } from '../../../api/models';
-import { palette } from '../../../lib/theme';
+import { CharacterStatus } from '../api/models';
+import { palette } from '../lib/theme';
 
 export interface CharacterCardProps {
   avatarUrl: string;
