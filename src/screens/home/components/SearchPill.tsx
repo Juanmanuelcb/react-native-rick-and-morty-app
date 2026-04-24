@@ -45,7 +45,7 @@ const styles = StyleSheet.create({
     borderColor: palette.grey1,
   },
   label: {
-    fontSize: 14,
+    fontSize: 15,
     fontWeight: '500',
   },
   labelSelected: {

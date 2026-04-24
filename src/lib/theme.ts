@@ -11,10 +11,25 @@ export const palette = {
 
 export const appTheme = createTheme({
   components: {
+    Text: {
+      style: {
+        fontSize: 15,
+      },
+    },
+    ListItemTitle: {
+      style: {
+        fontSize: 15,
+      },
+    },
+    ListItemSubtitle: {
+      style: {
+        fontSize: 15,
+      },
+    },
     Input: {
       placeholderTextColor: palette.grey0,
       inputStyle: {
-        fontSize: 14,
+        fontSize: 15,
         fontWeight: '500',
         color: palette.black,
       },
@@ -23,7 +38,7 @@ export const appTheme = createTheme({
         borderColor: palette.grey1,
         borderWidth: 1,
         borderRadius: 9999,
-        paddingHorizontal: 14,
+        paddingHorizontal: 15,
         borderBottomWidth: 1,
       },
       containerStyle: {
