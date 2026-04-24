@@ -1,69 +1,63 @@
-# React Native Technical Challenge: The Rick and Morty Character Guide
+# Rick and Morty Character Guide
 
-## **Objective**
+React Native app to browse, search and save Rick and Morty characters.
 
-The goal of this challenge is to assess your ability to build a clean, scalable, and user-friendly mobile application using React Native and modern development practices. You will create an app that allows users to browse characters from the Rick and Morty series. This task should take approximately 3-4 hours to complete.
+## How to run
 
-## **Brief**
+```bash
+yarn install
+yarn start
+```
 
-You are tasked with building a mobile application using the [Rick and Morty API](https://rickandmortyapi.com/documentation/). The application should be built with React Native, TypeScript, and Expo.
+Scan the QR code with Expo Go to open the app.
 
-## **Tasks:**
+## Tech Stack
 
-### 1. **Character List Screen:**
+- **React Native** 0.81 + **Expo** 54
+- **TypeScript** 5.9 (strict mode)
+- **React Navigation** 7 — bottom tabs
+- **TanStack React Query** 5 — API calls and cache
+- **RNEUI** 5 — UI components
+- **AsyncStorage** — saves favorites locally
+- **Axios** — HTTP client
 
-- On the initial screen, fetch and display the first 5 characters from the API (/character endpoint).
-- Implement an infinite scroll feature. As the user scrolls to the bottom of the list, the app should fetch and append the next 5 characters.
-- Each character should be displayed in a Card component.
+## Folder Structure
 
-### 2. **Character Card Component:**
+```
+src/
+├── api/          # API client, models, query keys
+├── components/   # Shared components (CharacterCard, EmptyState, etc.)
+├── lib/          # Theme, React Query setup, favorites context
+└── screens/
+    ├── home/     # Character list, search, filters
+    └── favorites/# Favorites list
+```
 
-- The card must display the character's:
-  - Image
-  - Name
-  - Species
-  - Gender
-  - Origin (use origin.name)
+## What it does
 
-- The background color of the card should visually indicate the character's status:
-  - Green-tinted for "Alive."
-  - Red-tinted for "Dead."
-  - Gray-tinted for "unknown."
+- Shows a list of characters with infinite scroll (starts with 5, loads more (default: 20) as you scroll)
+- Search by name (with debounce)
+- Filter by status: All, Alive, Dead, Unknown
+- Cards change background color based on status (green, red, grey)
+- Tap the heart icon to save or unsave a character to favorites
+- Favorites are saved locally and persist after closing the app
+- Separate Favorites tab to see and manage saved characters
+- Pull-to-refresh on the character list
+- Shows a message when no results are found
 
-### 3. **Filter Feature:**
+## Scripts
 
-- Implement filtering capabilities on the Character List Screen using the API's built-in filtering parameters:
-  - **Name:** Filter characters by the given name.
-  - **Status:** Filter characters by the given status (alive, dead, or unknown).
-- Display appropriate feedback when no results are found.
+| Command | What it does |
+|---------|-------------|
+| `yarn start` | Start Expo dev server |
+| `yarn ios` | Run on iOS simulator |
+| `yarn android` | Run on Android emulator |
+| `yarn lint` | Check code with ESLint |
+| `yarn lint:fix` | Fix lint errors |
+| `yarn format` | Format code with Prettier |
 
-### 4. **Favorite Management:**
+## Trade-offs decisions
 
-- Add a "Favorite" button (e.g., a star icon) to each character card.
-- Tapping the button should add or remove the character from a favorite list.
-- The list of favorite characters must persist after the application is closed and reopened.
-- Implement a separate "Favorites" screen to display only the user's favorite characters, where they can also be removed from the list.
-
-### 5. **Technical Requirements:**
-
-- **Language**: TypeScript (v5+)
-- **Framework:** React Native (v0.79+) with Expo
-- **Code Quality:** The project should have a clear and scalable architecture.
-
-## **What We Will Be Looking For**
-
-- **Clean Architecture:** How you structure your files, components, and logic.
-- **TypeScript Proficiency:** Your use of types and interfaces to create a robust application.
-- **Component Design:** Reusability and clarity of your React components.
-- **State Management:** Your approach to handling local and remote data.
-- **Problem-Solving:** How you approach the requirements and overcome any challenges.
-- **UX & Polish:** Clarity of UI, accessibility labels, responsiveness (pull-to-refresh, loading states).
-- **Documentation:** README clarity, how to run and test, and explanation of trade-offs.
-
-## **CodeSubmit**
-
-Please organize, design, test, and document your code as if it were going into production—then push your changes to the master branch. After you have pushed your code, you may submit the assignment on the assignment page.
-
-All the best and happy coding,
-
-**The CKW AG Team**
+- **React Context for favorites** - only favorites need to be shared between screens, so a full state library (Redux, Zustand) was not needed.
+- **Client-side slicing for the first 20 items** - the API always returns 20 per page, but the requirement is to show 5 at a time. So the app loads 20 from the API and shows them in groups of 5. After the first 20, it loads full pages normally.
+- **Saving full Character objects in favorites** - this way the Favorites screen doesn't need extra API calls to show the cards. The data is small so storage is not a problem.
