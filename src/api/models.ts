@@ -18,10 +18,16 @@ export interface CharacterLocation {
   url: string;
 }
 
+export enum CharacterStatus {
+  Alive = 'Alive',
+  Dead = 'Dead',
+  Unknown = 'Unknown',
+}
+
 export interface Character {
   id: number;
   name: string;
-  status: 'Alive' | 'Dead' | 'Unknown';
+  status: CharacterStatus;
   species: string;
   type: string;
   gender: string;

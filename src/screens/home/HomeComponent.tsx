@@ -1,5 +1,6 @@
 import * as React from 'react';
 import { FlatList, StyleSheet, View } from 'react-native';
+import { CharacterStatus } from '../../api/models';
 import { CharacterCard } from './components/CharacterCard';
 import { Search } from './components/Search';
 
@@ -12,6 +13,7 @@ export const HomeComponent = () => {
         species='Human'
         gender='Male'
         origin='Earth'
+        status={CharacterStatus.Alive}
       />
     );
   };

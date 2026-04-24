@@ -7,6 +7,9 @@ export const palette = {
   grey1: '#E5E5E5',
   grey2: '#F5F5F5',
   grey3: '#FAFAFA',
+  statusAlive: '#4CAF50',
+  statusDead: '#F44336',
+  statusUnknown: '#9E9E9E',
 };
 
 export const appTheme = createTheme({
