@@ -7,7 +7,6 @@ import { Search } from './components/Search';
 export interface HomeComponentsProps {
   characters: Character[];
   isLoading: boolean;
-  searchName?: string;
   searchStatus?: CharacterStatus;
   onEndReached: () => void;
   onSearchNameChange: (searchName?: string) => void;
@@ -17,7 +16,6 @@ export interface HomeComponentsProps {
 export const HomeComponent: React.FC<HomeComponentsProps> = ({
   characters,
   isLoading,
-  searchName,
   searchStatus,
   onEndReached,
   onSearchNameChange,
@@ -39,7 +37,6 @@ export const HomeComponent: React.FC<HomeComponentsProps> = ({
   return (
     <View style={styles.container}>
       <Search
-        searchName={searchName}
         searchStatus={searchStatus}
         onSearchNameChange={onSearchNameChange}
         onSearchStatusChange={onSearchStatusChange}

@@ -6,7 +6,7 @@ import { CharacterStatus } from '../../api/models';
 import { HomeComponent } from './HomeComponent';
 
 export const HomeScreen = () => {
-  const [searchName, setSearchName] = React.useState();
+  const [searchName, setSearchName] = React.useState<string>();
   const [searchStatus, setSearchStatus] = React.useState<CharacterStatus>();
 
   const { data, fetchNextPage, isFetching } = useInfiniteQuery({
@@ -27,7 +27,6 @@ export const HomeScreen = () => {
       characters={characters}
       onEndReached={fetchNextPage}
       isLoading={isFetching}
-      searchName={searchName}
       searchStatus={searchStatus}
       onSearchNameChange={setSearchName}
       onSearchStatusChange={setSearchStatus}
