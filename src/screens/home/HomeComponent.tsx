@@ -1,19 +1,29 @@
 import * as React from 'react';
-import { FlatList, StyleSheet, View } from 'react-native';
-import { CharacterStatus } from '../../api/models';
+import { FlatList, ListRenderItem, StyleSheet, View } from 'react-native';
+import { Character } from '../../api/models';
 import { CharacterCard } from './components/CharacterCard';
 import { Search } from './components/Search';
 
-export const HomeComponent = () => {
-  const handleRenderItem = () => {
+export interface HomeComponentsProps {
+  characters: Character[];
+  onEndReached: () => void;
+  isLoading: boolean;
+}
+
+export const HomeComponent: React.FC<HomeComponentsProps> = ({
+  characters,
+  onEndReached,
+  isLoading,
+}) => {
+  const handleRenderItem: ListRenderItem<Character> = ({ item: character }) => {
     return (
       <CharacterCard
-        avatarUrl='https://rickandmortyapi.com/api/character/avatar/2.jpeg'
-        name='Morty Smith'
-        species='Human'
-        gender='Male'
-        origin='Earth'
-        status={CharacterStatus.Alive}
+        avatarUrl={character.image}
+        name={character.name}
+        species={character.species}
+        gender={character.gender}
+        origin={character.origin.name}
+        status={character.status}
       />
     );
   };
@@ -21,10 +31,12 @@ export const HomeComponent = () => {
   return (
     <View style={styles.container}>
       <Search />
-      <FlatList
-        data={Array.from({ length: 3 })}
+      <FlatList<Character>
+        data={characters}
         renderItem={handleRenderItem}
-        keyExtractor={(_, i) => `item_${i}`}
+        keyExtractor={character => `${character.id}`}
+        onEndReached={onEndReached}
+        refreshing={isLoading}
         contentContainerStyle={styles.listContent}
         style={styles.list}
       />
@@ -40,7 +52,8 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   listContent: {
-    padding: 20,
+    paddingVertical: 10,
+    paddingHorizontal: 15,
     gap: 10,
   },
 });

@@ -12,6 +12,7 @@ export const Search: React.FC = () => {
         <SearchPill label='All' selected />
         <SearchPill label='Alive' />
         <SearchPill label='Dead' />
+        <SearchPill label='Unknown' />
       </View>
     </View>
   );
@@ -21,7 +22,7 @@ const styles = StyleSheet.create({
   container: {
     borderBottomColor: palette.grey1,
     borderBottomWidth: 1,
-    paddingHorizontal: 20,
+    paddingHorizontal: 15,
     paddingBottom: 10,
     gap: 10,
   },
