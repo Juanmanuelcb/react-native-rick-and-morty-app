@@ -1,15 +1,16 @@
-import { StyleSheet, Text, View } from 'react-native';
+import { SafeAreaProvider } from 'react-native-safe-area-context';
+import { ThemeProvider } from '@rneui/themed';
+import { QueryProvider } from './lib/reactQuery';
+import { Screens } from './screens';
 
-export const Routes: React.FC = () => {
+export const App: React.FC = () => {
     return (
-        <View style={styles.container}>
-            <Text>Open up App.tsx to start working on your app!</Text>
-        </View>
+        <QueryProvider>
+            <SafeAreaProvider>
+                <ThemeProvider>
+                    <Screens />
+                </ThemeProvider>
+            </SafeAreaProvider>
+        </QueryProvider>
     );
-}
-
-const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-    },
-});
+};
