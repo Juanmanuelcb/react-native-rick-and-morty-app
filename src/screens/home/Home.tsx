@@ -9,7 +9,7 @@ export const HomeScreen = () => {
   const [searchName, setSearchName] = React.useState<string>();
   const [searchStatus, setSearchStatus] = React.useState<CharacterStatus>();
 
-  const { data, fetchNextPage, isFetching } = useInfiniteQuery({
+  const { data, fetchNextPage, isFetching, refetch } = useInfiniteQuery({
     queryKey: [QUERY_KEYS.CHARACTERS, searchName, searchStatus],
     queryFn: ({ pageParam }) =>
       CharacterService.getAll(pageParam, searchName, searchStatus),
@@ -30,6 +30,7 @@ export const HomeScreen = () => {
       searchStatus={searchStatus}
       onSearchNameChange={setSearchName}
       onSearchStatusChange={setSearchStatus}
+      onRefresh={refetch}
     />
   );
 };

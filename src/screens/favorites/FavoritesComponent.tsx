@@ -3,6 +3,7 @@ import { FlatList, ListRenderItem, StyleSheet } from 'react-native';
 import { Character } from '../../api/models';
 import { CharacterCard } from '../../components/CharacterCard';
 import { Container } from '../../components/Container';
+import { EmptyState } from '../../components/EmptyState';
 import { useAppContext } from '../../lib/context';
 
 export interface FavoritesComponentsProps {
@@ -36,6 +37,13 @@ export const FavoritesComponent: React.FC<FavoritesComponentsProps> = ({
         renderItem={handleRenderItem}
         keyExtractor={character => `${character.id}`}
         contentContainerStyle={styles.listContent}
+        ListEmptyComponent={
+          <EmptyState
+            title='No favorites yet'
+            subtitle='Tap the heart on a character to save it here.'
+            icon='heart-outline'
+          />
+        }
         style={styles.list}
       />
     </Container>
