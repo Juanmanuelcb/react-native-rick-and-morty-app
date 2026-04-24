@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { ApiResponse, Character } from './models';
+import { ApiResponse, Character, CharacterStatus } from './models';
 
 const API_URL = 'https://rickandmortyapi.com/api';
 
@@ -9,15 +9,10 @@ const client = axios.create({
 });
 
 export const CharacterService = {
-  getAll: async (page: number = 1) => {
+  getAll: async (page: number = 1, name?: string, status?: CharacterStatus) => {
     const response = await client.get<ApiResponse<Character>>('/character', {
-      params: { page },
+      params: { page, name, status },
     });
-    return response.data;
-  },
-
-  getById: async (id: number) => {
-    const response = await client.get<Character>(`/character/${id}`);
     return response.data;
   },
 };

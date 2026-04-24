@@ -1,19 +1,27 @@
 import * as React from 'react';
 import { FlatList, ListRenderItem, StyleSheet, View } from 'react-native';
-import { Character } from '../../api/models';
+import { Character, CharacterStatus } from '../../api/models';
 import { CharacterCard } from './components/CharacterCard';
 import { Search } from './components/Search';
 
 export interface HomeComponentsProps {
   characters: Character[];
-  onEndReached: () => void;
   isLoading: boolean;
+  searchName?: string;
+  searchStatus?: CharacterStatus;
+  onEndReached: () => void;
+  onSearchNameChange: (searchName?: string) => void;
+  onSearchStatusChange: (searchStatus?: CharacterStatus) => void;
 }
 
 export const HomeComponent: React.FC<HomeComponentsProps> = ({
   characters,
-  onEndReached,
   isLoading,
+  searchName,
+  searchStatus,
+  onEndReached,
+  onSearchNameChange,
+  onSearchStatusChange,
 }) => {
   const handleRenderItem: ListRenderItem<Character> = ({ item: character }) => {
     return (
@@ -30,7 +38,12 @@ export const HomeComponent: React.FC<HomeComponentsProps> = ({
 
   return (
     <View style={styles.container}>
-      <Search />
+      <Search
+        searchName={searchName}
+        searchStatus={searchStatus}
+        onSearchNameChange={onSearchNameChange}
+        onSearchStatusChange={onSearchStatusChange}
+      />
       <FlatList<Character>
         data={characters}
         renderItem={handleRenderItem}

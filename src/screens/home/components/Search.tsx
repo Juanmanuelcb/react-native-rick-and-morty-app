@@ -1,18 +1,58 @@
 import { Input } from '@rneui/themed';
 import * as React from 'react';
 import { StyleSheet, View } from 'react-native';
+import { CharacterStatus } from '../../../api/models';
 import { palette } from '../../../lib/theme';
 import { SearchPill } from './SearchPill';
 
-export const Search: React.FC = () => {
+export interface SearchProps {
+  searchName?: string;
+  searchStatus?: CharacterStatus;
+  onSearchNameChange: (searchName?: string) => void;
+  onSearchStatusChange: (searchStatus?: CharacterStatus) => void;
+}
+
+export const Search: React.FC<SearchProps> = ({
+  searchName,
+  searchStatus,
+  onSearchNameChange,
+  onSearchStatusChange,
+}) => {
+  const statuses = [
+    {
+      label: 'All',
+      value: undefined,
+    },
+    {
+      label: 'Alive',
+      value: CharacterStatus.Alive,
+    },
+    {
+      label: 'Dead',
+      value: CharacterStatus.Dead,
+    },
+    {
+      label: 'Unknown',
+      value: CharacterStatus.Unknown,
+    },
+  ];
+
   return (
     <View style={styles.container}>
-      <Input placeholder='Start typing here...' renderErrorMessage={false} />
+      <Input
+        placeholder='Start typing here...'
+        renderErrorMessage={false}
+        value={searchName}
+        onChangeText={onSearchNameChange}
+      />
       <View style={styles.pills}>
-        <SearchPill label='All' selected />
-        <SearchPill label='Alive' />
-        <SearchPill label='Dead' />
-        <SearchPill label='Unknown' />
+        {statuses.map(status => (
+          <SearchPill
+            label={status.label}
+            selected={status.value === searchStatus}
+            onPress={() => onSearchStatusChange(status.value)}
+          />
+        ))}
       </View>
     </View>
   );
