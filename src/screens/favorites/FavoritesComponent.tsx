@@ -1,27 +1,16 @@
 import * as React from 'react';
 import { FlatList, ListRenderItem, StyleSheet } from 'react-native';
-import { Character, CharacterStatus } from '../../api/models';
+import { Character } from '../../api/models';
 import { CharacterCard } from '../../components/CharacterCard';
 import { Container } from '../../components/Container';
 import { useAppContext } from '../../lib/context';
-import { Search } from './components/Search';
 
-export interface HomeComponentsProps {
+export interface FavoritesComponentsProps {
   characters: Character[];
-  isLoading: boolean;
-  searchStatus?: CharacterStatus;
-  onEndReached: () => void;
-  onSearchNameChange: (searchName?: string) => void;
-  onSearchStatusChange: (searchStatus?: CharacterStatus) => void;
 }
 
-export const HomeComponent: React.FC<HomeComponentsProps> = ({
+export const FavoritesComponent: React.FC<FavoritesComponentsProps> = ({
   characters,
-  isLoading,
-  searchStatus,
-  onEndReached,
-  onSearchNameChange,
-  onSearchStatusChange,
 }) => {
   const { isFavorite, toggleFavorite } = useAppContext();
 
@@ -42,17 +31,10 @@ export const HomeComponent: React.FC<HomeComponentsProps> = ({
 
   return (
     <Container>
-      <Search
-        searchStatus={searchStatus}
-        onSearchNameChange={onSearchNameChange}
-        onSearchStatusChange={onSearchStatusChange}
-      />
       <FlatList<Character>
         data={characters}
         renderItem={handleRenderItem}
         keyExtractor={character => `${character.id}`}
-        onEndReached={onEndReached}
-        refreshing={isLoading}
         contentContainerStyle={styles.listContent}
         style={styles.list}
       />

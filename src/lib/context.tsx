@@ -1,76 +1,71 @@
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import * as React from 'react';
 import { Character } from '../api/models';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const FAVORITES_STORAGE_KEY = 'FAVORITES_STORAGE_KEY';
 
 export interface AppContextType {
-    favoriteCharacters: Character[] | null;
+  favoriteCharacters: Character[];
+  toggleFavorite: (character: Character) => void;
+  isFavorite: (id: number) => boolean;
 }
 
-const INITIAL_STATE: AppContextType = {
-    favoriteCharacters: null,
-};
-
-const AppContext = React.createContext<AppContextType>(INITIAL_STATE);
+const AppContext = React.createContext<AppContextType>({
+  favoriteCharacters: [],
+  toggleFavorite: () => {},
+  isFavorite: () => false,
+});
 
 export const useAppContext = () => React.useContext(AppContext);
 
 export const AppContextProvider: React.FC<React.PropsWithChildren> = ({
-    children,
+  children,
 }) => {
-    const [favoriteCharacters, setFavoriteCharacters] = React.useState<Character[] | null>(INITIAL_STATE.favoriteCharacters);
-    const timer = React.useRef(0);
+  const [favoriteCharacters, setFavoriteCharacters] = React.useState<
+    Character[]
+  >([]);
+  const hasLoaded = React.useRef(false);
 
-    React.useEffect(() => {
-        (async () => {
-            try {
-                const value = await AsyncStorage.getItem(FAVORITES_STORAGE_KEY);
-                if (value !== null) {
-                    const savedFavorites = JSON.parse(value) || [];
-                    setFavoriteCharacters(savedFavorites as Character[]);
-                }
-            } catch (e) {
-                console.log("Error while trying to read favorites", e);
-            }
-        })();
-    }, []);
-
-    React.useEffect(() => {
-        clearTimeout(timer.current);
-
-        timer.current = setTimeout(async () => {
-            try {
-                await AsyncStorage.setItem(FAVORITES_STORAGE_KEY, JSON.stringify(favoriteCharacters));
-            } catch (e) {
-                console.log("Error while trying to save favorites", e);
-            }
-        }, 500);
-
-        return () => {
-            clearTimeout(timer.current);
+  React.useEffect(() => {
+    (async () => {
+      try {
+        const value = await AsyncStorage.getItem(FAVORITES_STORAGE_KEY);
+        if (value !== null) {
+          setFavoriteCharacters(JSON.parse(value) || []);
         }
-    }, [favoriteCharacters]);
+      } catch (e) {
+        console.log('Error while trying to read favorites', e);
+        setFavoriteCharacters([]);
+      } finally {
+        hasLoaded.current = true;
+      }
+    })();
+  }, []);
 
-    const handlePress = (character: Character) => {
-        setFavoriteCharacters((prev) => {
-            if (!prev) {
-                return prev;
-            }
+  React.useEffect(() => {
+    if (!hasLoaded.current) return;
 
-            return prev.some(c => c.id === character.id)
-                ? prev.filter(c => c.id !== character.id)
-                : [...prev, character]
-        });
-    };
+    AsyncStorage.setItem(
+      FAVORITES_STORAGE_KEY,
+      JSON.stringify(favoriteCharacters),
+    ).catch(e => console.log('Error while trying to save favorites', e));
+  }, [favoriteCharacters]);
 
-    return (
-        <AppContext.Provider
-            value={{
-                favoriteCharacters
-            }}
-        >
-            {children}
-        </AppContext.Provider>
+  const toggleFavorite = (character: Character) => {
+    setFavoriteCharacters(prev =>
+      prev.some(c => c.id === character.id)
+        ? prev.filter(c => c.id !== character.id)
+        : [...prev, character],
     );
+  };
+
+  const isFavorite = (id: number) => favoriteCharacters.some(c => c.id === id);
+
+  return (
+    <AppContext.Provider
+      value={{ favoriteCharacters, toggleFavorite, isFavorite }}
+    >
+      {children}
+    </AppContext.Provider>
+  );
 };

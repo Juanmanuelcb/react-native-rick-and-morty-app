@@ -2,6 +2,7 @@ import { Ionicons } from '@expo/vector-icons';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createStaticNavigation } from '@react-navigation/native';
 import { palette } from '../lib/theme';
+import { FavoritesScreen } from './favorites/Favorites';
 import { HomeScreen } from './home/Home';
 
 const Tabs = createBottomTabNavigator({
@@ -33,7 +34,7 @@ const Tabs = createBottomTabNavigator({
       },
     },
     Favorites: {
-      screen: HomeScreen,
+      screen: FavoritesScreen,
       options: {
         tabBarLabel: 'Favorites',
         tabBarIcon: ({ focused }) => (
