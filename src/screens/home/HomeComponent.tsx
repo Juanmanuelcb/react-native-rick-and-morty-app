@@ -1,6 +1,7 @@
 import * as React from 'react';
-import { FlatList, ListRenderItem, StyleSheet, View } from 'react-native';
+import { FlatList, ListRenderItem, StyleSheet } from 'react-native';
 import { Character, CharacterStatus } from '../../api/models';
+import { Container } from '../../components/Container';
 import { CharacterCard } from './components/CharacterCard';
 import { Search } from './components/Search';
 
@@ -35,7 +36,7 @@ export const HomeComponent: React.FC<HomeComponentsProps> = ({
   };
 
   return (
-    <View style={styles.container}>
+    <Container>
       <Search
         searchStatus={searchStatus}
         onSearchNameChange={onSearchNameChange}
@@ -50,14 +51,11 @@ export const HomeComponent: React.FC<HomeComponentsProps> = ({
         contentContainerStyle={styles.listContent}
         style={styles.list}
       />
-    </View>
+    </Container>
   );
 };
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-  },
   list: {
     flex: 1,
   },

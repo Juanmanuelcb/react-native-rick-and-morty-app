@@ -16,7 +16,7 @@ export const Search: React.FC<SearchProps> = ({
   onSearchNameChange,
   onSearchStatusChange,
 }) => {
-  const [searchName, setSearchName] = React.useState("");
+  const [searchName, setSearchName] = React.useState('');
   const timer = React.useRef(0);
 
   React.useEffect(() => {
@@ -28,7 +28,7 @@ export const Search: React.FC<SearchProps> = ({
 
     return () => {
       clearTimeout(timer.current);
-    }
+    };
   }, [searchName]);
 
   const statuses = [
@@ -59,7 +59,7 @@ export const Search: React.FC<SearchProps> = ({
         onChangeText={setSearchName}
       />
       <View style={styles.pills}>
-        {statuses.map((status) => (
+        {statuses.map(status => (
           <SearchPill
             label={status.label}
             selected={status.value === searchStatus}
